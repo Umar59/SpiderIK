@@ -16,7 +16,7 @@ public class LegMover : MonoBehaviour
 
         float distanceFromHome = Vector3.Distance(transform.position, homeTransform.position);
 
-        Debug.Log(distanceFromHome);
+        //Debug.Log(distanceFromHome);
 
         if (distanceFromHome > wantStepDistance)
         {

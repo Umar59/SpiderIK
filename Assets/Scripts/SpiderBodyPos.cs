@@ -5,30 +5,25 @@ using UnityEngine;
 public class SpiderBodyPos : MonoBehaviour
 {
     [SerializeField] List<Transform> legTransforms = new List<Transform>();
-
+    [SerializeField] private float y_offset = 1.8f;
 
     void Update()
     {
-        //Vector3 maxLegPos = new Vector3(FindMaxXYZ(legTransforms, 'x'), FindMaxXYZ(legTransforms, 'y') + 3f, FindMaxXYZ(legTransforms, 'z'));
-        //Vector3 minLegPos = new Vector3(FindMinXYZ(legTransforms, 'x'), FindMinXYZ(legTransforms, 'y') + 3f, FindMinXYZ(legTransforms, 'z'));
-        //Vector3 newBodyPos = Vector3.Lerp(minLegPos, maxLegPos, 0.5f);
-        //newBodyPos.y += 2.5f;
+        Vector3 maxLegPos = new Vector3(maxXYZ(legTransforms, 'x'), maxXYZ(legTransforms, 'y'),
+            maxXYZ(legTransforms, 'z'));
+        Vector3 minLegPos = new Vector3(minXYZ(legTransforms, 'x'), minXYZ(legTransforms, 'y'),
+            minXYZ(legTransforms, 'z'));
+        Vector3 newBodyPos = Vector3.Lerp(minLegPos, maxLegPos, 0.5f);
+        newBodyPos.y += y_offset;
 
-        //Debug.Log(maxLegPos + " Min: " + minLegPos);
-        float maxY = FindMaxXYZ(legTransforms, 'y');
-        Debug.Log(maxY);
-       //transform.position = newBodyPos;
+        transform.position = newBodyPos;
     }
 
-    public float FindMaxXYZ(List<Transform> list, char coordinate)
+    private float maxXYZ(List<Transform> list, char coordinate)
     {
-        if (list.Count == 0)
-        {
-            Debug.Log("List is empty");
-            //exception
-        }
+        if (list.Count == 0) Debug.Log("List is empty");  //exception
 
-        float maxXYZ = 1;
+        float maxXYZ = float.MinValue;
         switch (coordinate)
         {
             case 'x':
@@ -61,19 +56,14 @@ public class SpiderBodyPos : MonoBehaviour
                 }
                 break;
         }
-
-
         return maxXYZ;
     }
-    public float FindMinXYZ(List<Transform> list, char coordinate)
-    {
-        if (list.Count == 0)
-        {
-            Debug.Log("List is empty");
-            //exception
-        }
 
-        float minXYZ = 0;
+    private float minXYZ(List<Transform> list, char coordinate)
+    {
+        if (list.Count == 0) Debug.Log("List is empty");  //exception
+
+        float minXYZ = float.MaxValue;
         switch (coordinate)
         {
             case 'x':
@@ -106,8 +96,6 @@ public class SpiderBodyPos : MonoBehaviour
                 }
                 break;
         }
-
-
         return minXYZ;
     }
 }

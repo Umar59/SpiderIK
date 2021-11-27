@@ -18,7 +18,6 @@ public class HomeSpherePos : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         Ray ray = new Ray(transform.position, Vector3.down);
